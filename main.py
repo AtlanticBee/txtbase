@@ -1,4 +1,4 @@
-from engine.startup import start
+from engine.core import run_txtbase
 
 if __name__ == "__main__":
-    start()
+    run_txtbase()

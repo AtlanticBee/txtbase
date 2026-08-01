@@ -12,7 +12,7 @@ dependencies = []
 
 # THIS LINE CREATES THE CUSTOM TERMINAL COMMAND:
 [project.scripts]
-txtbase = "main:start"
+txtbase = "main:run_txtbase"
 
 [tool.setuptools]
 py-modules = ["main"]
