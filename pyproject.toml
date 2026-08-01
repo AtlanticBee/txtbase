@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "txtbase"
+description = "A human-readable, columnar and git-friendly database engine"
+version = "1.0.0"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+dependencies = []
+
+# THIS LINE CREATES THE CUSTOM TERMINAL COMMAND:
+[project.scripts]
+txtbase = "main:start"
+
+[tool.setuptools]
+py-modules = ["main"]
+packages = ["engine"]
