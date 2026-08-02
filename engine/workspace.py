@@ -15,16 +15,23 @@ If no path is supplied, the program will open the default DB file name, or creat
 If a path is supplied and the database cannot be found, a new one under that name will be created.
 """
 
-def parse_args(arguments, default_db_name):
+def prepare_workspace(arguments, default_db_name):
     arg_count = len(arguments)
 
     if arg_count == 1:
-        return str(Path(default_db_name).resolve())
+        target_path = Path(default_db_name)
     elif arg_count == 2:
-        # This resolve() method return an absolute path. Leading "./" are taken into account automatically.
-        # We may need to consider using the additional ".expanduser()" method chained beforehand for tilde handling?
-        return str(Path(arguments[1]).resolve())
+        target_path = Path(arguments[1])
     else:
         print(incorrect_num_args_text.replace("XXX",str(arg_count)))
-        sys.exit()
+        sys.exit(1)
+
+    db_dir = target_path.expanduser().resolve()
+
+    if db_dir.is_file():
+        print(f"Error: Target path {db_dir} is an existing file, not a directory. Aborting...")
+        sys.exit(1)
+
+    db_dir.mkdir(parents=True, exist_ok=True)
+    return db_dir
 
