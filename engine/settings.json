@@ -1,4 +1,4 @@
 {
     "server_port":8080,
-    "default_db_name":"my-database"
+    "default_db_name":"./temp/my-database"
 }
