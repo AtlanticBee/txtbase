@@ -5,4 +5,7 @@ from engine.settings import load_settings
 def run_txtbase():
     settings = load_settings("./engine/settings.json")
     database_path = prepare_workspace(arguments=sys.argv, default_db_name=settings["default_db_name"])
-    print(database_path)
+    # Next: check DB integrity (even if empty) using rules engine
+    # Then load DB into RAM
+    # Then start HTTP server
+    # Then wait for user requests

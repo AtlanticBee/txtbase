@@ -9,7 +9,7 @@ Arguments supplied: XXX
 
 To run txtbase use either:
 \t1. txtbase
-\t2. txtbase [/PATH/TO/DATABASE]
+\t2. txtbase [PATH/TO/DATABASE]
 
 If no path is supplied, the program will open the default DB file name, or create a new one.
 If a path is supplied and the database cannot be found, a new one under that name will be created.
