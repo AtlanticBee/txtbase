@@ -4,7 +4,7 @@
 
 The idea of txtbase stemmed from some frustrations I encoutered on SQLite with SQL, but which apply more generally to any digital database:
 - It takes AGES to do things manually
-- Without custom UIs that can interact with the DB, simple Unix processes like copying and pasting or searching require substantial knowledge and effort. and are not directly compatible
+- Without custom UIs that can interact with the DB, simple Unix processes like copying and pasting or searching require substantial knowledge and effort. Binary files are not directly compatible, and we always need someone's third party software.
 - Moving data to/from other file types (e.g. importing data from text files, spreadsheets, notes...) all require extra steps or user interfaces to bridge the gap
 - Changes cannot be tracked and data cannot be directly visualised with Git/Github or another version control program (data being stored in high performance binaries)
 - Things I don't understand from start to finish annoy me, and databases are one of the many things I don't understand fully
@@ -26,9 +26,11 @@ The philosphy of txtbase is therefore as follows:
 Some additional rules to be aware of for ease of use and simplicity:
 - Files and folders must only have the following characters: ^[A-Za-z0-9-]+ (i.e. alphanumerical ASCII, and dashes). This is also known as kebab case.
     - This differs from the python scripts that typically use snake case - an accidental but in my opinion useful separation
+- There are only two directory levels in a database: the collection of tables, and the collection of columns
 - Dates are stored as ISO 9601 strings which permit automatic sorting but are more readable than Unix timestamps (which is part of the design philosophy)
 - Column files only know if they depend on a foreign key, but they do not know if they themselves are used as a foreign key - this avoids a synchronisation requirement
     - Due to this, there will be an overhead in going from child to parent
+- Column files within a table MUST have the same number of rows
 - The newline is the only delimeter allowed for data
 - Only files with the extension .col are treated as data files
 - All folders within the database are considered tables (so if they're empty, they're just empty tables)
