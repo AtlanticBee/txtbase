@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from engine import types
 
 """
 This relationship data class comes with two key rules:
@@ -26,3 +27,13 @@ class Relationship:
     from_table: str
     to_column: str
     to_table: str
+
+@dataclass
+class ColumnType:
+    for_column: str
+    column_type: types.DataType
+
+@dataclass
+class Schema:
+    relationships: list[Relationship]
+    column_types: list[ColumnType]

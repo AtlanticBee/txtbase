@@ -5,6 +5,7 @@ from datetime import datetime
 """
 The Enum class is... just a class! You can add your own methods.
 In our case, we are specifying here the data types supported and a validation method. It's somewhere between OOP and regular functional programming?
+Note: 
 """
 
 class DataType(Enum):

@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
 from typing import Any
-from relationships import Relationship
+from engine.schema import Relationship
 
 """
-Note: the default_factory option is required because Python sets one mutable object default value per class, not per instance. We want separate mutable objects per instance. The "field" is a part of dataclass functionality, not a Python global reserved word.
+Note: the default_factory option is required because Python sets one mutable object default value per class, not per instance. We want separate mutable objects per instance. The "field" is a part of dataclass functionality, not a Python global reserved word. I did consider whether or not the columns should be nested inside the table data structures. A benefit is you can have two columns of the same name in different tables. Another is that at one level of nesting, it's still readable to call "parent.child". Thirdly, it forbids automatically any duplicate table names. A downside is that long-term it makes the data structure more complex and possibly rigid or slower.
 """
 
 @dataclass
