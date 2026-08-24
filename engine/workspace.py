@@ -1,6 +1,5 @@
 import sys
 from pathlib import Path
-from engine import settings
 
 incorrect_num_args_text = """
 *** Error: too many arguments supplied. Aborting... ***
@@ -18,11 +17,11 @@ If a path is supplied and the database cannot be found, a new one under that nam
 Note: it is recommended to use a DB directory name with kebab case and using only alphanumerical values for consistency with the DB filenames.
 """
 
-def prepare_workspace(arguments, default_db_name = settings.global_settings.default_dir):
+def prepare_workspace(arguments, default_path):
     arg_count = len(arguments)
 
     if arg_count == 1:
-        target_path = Path(default_db_name)
+        target_path = Path(default_path)
     elif arg_count == 2:
         target_path = Path(arguments[1])
     else:

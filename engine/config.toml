@@ -1,0 +1,13 @@
+# Initially, this was going to be a Python file using a dataclass for type-safety but...
+# Honestly TOML matches the philosophy of this project perfectly and looks nicer.
+# Change it at your peril. Validation may occur elsewhere. This pattern may also replicate for the manual stuff like schemas.
+
+# Global Settings
+server_port = 8080
+default_dir = "./temp/my-database"
+null_string = "NULL"
+
+# Ignored Files
+ignored_prefixes = [".","__"]
+ignored_infixes = []
+ignored_suffixes = []
