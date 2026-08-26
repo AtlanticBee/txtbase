@@ -29,12 +29,11 @@ class TestColFilePathValidation(unittest.TestCase):
             file_path = self.base_path / name
             file_path.touch()
             with self.subTest(msg=f"Test if colfile name '{name}' is valid", path=file_path):
-                print(f"subtest - colfile name validation - {name}")
                 self.assertTrue(is_valid_colfile(file_path))
 
     def test_invalid_colfile_returns_false(self):
         invalid_names = [
-            "valid-Column.col"
+            "valid-Column.col",
             "valid-column-234col",
             "valid-column-234.mol",
             ".col",
@@ -49,7 +48,6 @@ class TestColFilePathValidation(unittest.TestCase):
             file_path = self.base_path / name
             file_path.touch()
             with self.subTest(msg=f"Test if colfile name '{name}' is invalid", path=file_path):
-                print(f"subtest - colfile name validation - {name}")
                 self.assertFalse(is_valid_colfile(file_path))
 
     def test_colfile_cannot_be_directory(self):
@@ -83,7 +81,6 @@ class TestTableDirPathValidation(unittest.TestCase):
             dir_path = self.base_path / name
             dir_path.mkdir(parents=False, exist_ok=False)
             with self.subTest(msg=f"Test if table dir name '{name}' is valid", path=dir_path):
-                print(f"subtest - table dir name validation - {name}")
                 self.assertTrue(is_valid_tabledir(dir_path))
 
     def test_invalid_table_name_returns_false(self):
@@ -101,7 +98,6 @@ class TestTableDirPathValidation(unittest.TestCase):
             dir_path = self.base_path / name
             dir_path.mkdir(parents=False, exist_ok=False)
             with self.subTest(msg=f"Test if table dir name '{name}' is valid", path=dir_path):
-                print(f"subtest - table dir name validation - {name}")
                 self.assertFalse(is_valid_tabledir(dir_path))
 
     def test_table_cannot_be_file(self):

@@ -1,6 +1,6 @@
 # Initially, this was going to be a Python file using a dataclass for type-safety but...
 # Honestly TOML matches the philosophy of this project perfectly and looks nicer.
-# Change it at your peril. Validation may occur elsewhere. This pattern may also replicate for the manual stuff like schemas.
+# Change it at your peril. Validation occurs on startup. This pattern may also replicate for the manual stuff like schemas.
 
 # Global Settings
 server_port = 8080
