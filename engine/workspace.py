@@ -2,22 +2,6 @@ from engine.val_path import is_valid_pathname
 from pathlib import Path
 from engine.errors import ArgumentError, WorkspaceError
 
-incorrect_num_args_text = """
-*** Error: too many arguments supplied. Aborting... ***
-
-Maximum number of arguments: 2 (program name + path to database)
-Arguments supplied: XXX
-
-To run txtbase use either:
-\t1. txtbase
-\t2. txtbase [PATH/TO/DATABASE]
-
-If no path is supplied, the program will open the default DB directory, creating any relevant folders as required.
-If a path is supplied and the database cannot be found, a new one under that name will be created.
-
-Note: it is recommended to use a DB directory name with kebab case and using only alphanumerical values for consistency with the DB filenames.
-"""
-
 def prepare_workspace(arguments:list, default_path:Path):
     arg_count = len(arguments)
 
