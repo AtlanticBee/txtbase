@@ -1,5 +1,6 @@
-import sys
+from engine.val_path import is_valid_pathname
 from pathlib import Path
+from engine.errors import ArgumentError, WorkspaceError
 
 incorrect_num_args_text = """
 *** Error: too many arguments supplied. Aborting... ***
@@ -17,7 +18,7 @@ If a path is supplied and the database cannot be found, a new one under that nam
 Note: it is recommended to use a DB directory name with kebab case and using only alphanumerical values for consistency with the DB filenames.
 """
 
-def prepare_workspace(arguments, default_path):
+def prepare_workspace(arguments:list, default_path:Path):
     arg_count = len(arguments)
 
     if arg_count == 1:
@@ -25,14 +26,15 @@ def prepare_workspace(arguments, default_path):
     elif arg_count == 2:
         target_path = Path(arguments[1])
     else:
-        print(incorrect_num_args_text.replace("XXX",str(arg_count)))
-        sys.exit(1)
+        raise(ArgumentError(f"Incorrect number of arguments supplied: expected max 2, received {arg_count}"))
 
     db_dir = target_path.expanduser().resolve()
 
+    if not is_valid_pathname(db_dir.name):
+        raise ValueError(f"The database name {db_dir} does not meet the following requirements: minimum length 1 character, only numbers and lower case letters.")
+
     if db_dir.is_file():
-        print(f"Error: Target path {db_dir} is an existing file, not a directory. Aborting...")
-        sys.exit(1)
+        raise(WorkspaceError(f"Specified database must be a directory, not a file."))
 
     db_dir.mkdir(parents=True, exist_ok=True)
     return db_dir
