@@ -4,6 +4,7 @@ from engine.data import Table
 
 def is_ignored(path:Path, ignored_prefixes:list[str], ignored_infixes:list[str], ignored_suffixes):
     table_name = path.name
+    # Using the 'any' keyword short-circuits when it reaches a single match
     has_prefix = any(table_name.startswith(x) for x in ignored_prefixes)
     has_infix = any(x in table_name for x in ignored_infixes)
     has_suffix = any(table_name.endswith(x) for x in ignored_suffixes)
