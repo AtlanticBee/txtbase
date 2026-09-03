@@ -1,7 +1,6 @@
 import sys
 from pathlib import Path
-import tomllib
-from engine.errors import WorkspaceError, ArgumentError
+from engine.errors import FatalAppError
 from engine.config import load_config
 from engine.workspace import prepare_workspace
 from engine.data import Database
@@ -10,23 +9,22 @@ from engine.loader import load_tables
 CURRENT_DIR = Path(__file__).resolve()
 
 def run_txtbase():
-    # Load configuration
+    # Note: this try-catch block only handles unrecoverable/unexpected errors
+    # Recoverable errors should be handled within the submodules.
     try:
         db_settings = load_config("config.toml", CURRENT_DIR)
-    except (tomllib.TOMLDecodeError, TypeError, FileNotFoundError) as err:
-        print(f"Error during config.toml parsing. Aborting... {err}")
-        sys.exit(1)
-    # Validate and/or create the database folder
-    try:
         db_path = prepare_workspace(
             arguments=sys.argv,
             default_path=db_settings.default_dir
-            )
-    except (ArgumentError, WorkspaceError, ValueError) as err:
-        print(f"Error encoutered during workspace preparation. Aborting... {err}")
+        )
+        database = Database()
+        database.tables = load_tables(db_path)
+    except (FatalAppError) as err:
+        print(f"Error encountered. Aborting... {err.message}")
+        sys.exit(err.exit_code)
+    except (Exception) as err:
+        print(f"Unexpected error encountered. Aborting... {err}")
 
-    database = Database()
-    database.tables = load_tables(db_path)
     # With the validated directory...
     # Get set of tables that meet requirements (one level deep)
     # For each table gather valid .col files

@@ -1,7 +1,7 @@
 import unittest
 import tempfile
 from pathlib import Path
-from engine.errors import ArgumentError, WorkspaceError
+from engine.errors import CLIArgumentError
 from engine.workspace import *
 
 class TestWorkSpacePreparation(unittest.TestCase):
@@ -22,16 +22,16 @@ class TestWorkSpacePreparation(unittest.TestCase):
         self.assertTrue(db_dir.name == self.default_db.name)
 
     def test_too_many_args_raises_args_error(self):
-        self.assertRaises(ArgumentError, prepare_workspace, ["my-script", "my-db", "another-var"], self.default_db)
+        self.assertRaises(CLIArgumentError, prepare_workspace, ["my-script", "my-db", "another-var"], self.default_db)
 
     def test_file_raises_workspace_error(self):
         new_file = self.base_path / "actually-a-file"
         new_file.touch()
         # Note we pass in the stringified full path or it defaults to the CWD of the __main__ caller.
-        self.assertRaises(WorkspaceError, prepare_workspace, ["my-script", str(new_file)], self.default_db)
+        self.assertRaises(CLIArgumentError, prepare_workspace, ["my-script", str(new_file)], self.default_db)
 
     def test_invalid_name_raises_value_error(self):
         # We'll make the database directory anyway to demonstrate that's not the issue. (Full testing of the name validation is already achieved in test_val_path.py)
         new_dir = self.base_path / "My-Database-1"
         new_dir.mkdir()
-        self.assertRaises(ValueError, prepare_workspace, ["my-script", str(new_dir)], self.default_db)
+        self.assertRaises(CLIArgumentError, prepare_workspace, ["my-script", str(new_dir)], self.default_db)
