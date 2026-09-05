@@ -18,7 +18,12 @@ def run_txtbase():
             default_path=db_settings.default_dir
         )
         database = Database()
-        database.tables = load_tables(db_path)
+        database.tables = load_tables(
+            db_path, 
+            db_settings.ignored_paths
+        )
+        for name, table in database.tables.items():
+            pass # TODO
     except (FatalAppError) as err:
         print(f"Error encountered. Aborting... {err.message}")
         sys.exit(err.exit_code)

@@ -7,7 +7,8 @@ server_port = 8080
 default_dir = "./temp/my-database"
 null_string = "NULL"
 
-# Ignored Files
-ignored_prefixes = [".","__"]
-ignored_infixes = []
-ignored_suffixes = []
+# Ignored Files - nested as dictionary inside ignored_paths on load
+[ignored_paths]
+prefixes = [".","__"]
+infixes = []
+suffixes = []

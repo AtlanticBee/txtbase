@@ -28,3 +28,14 @@ class Database:
     Contains dictionary of tables by name lookup.
     """
     tables: dict[str, Table] = field(default_factory=dict)
+
+# Auxilliary dataclasses
+
+@dataclass
+class IgnoredPaths:
+    """
+    Contains set of prefixes, infixes and suffixes to be ignored on table and column loading.
+    """
+    prefixes: list[str] = field(default_factory=list)
+    infixes: list[str] = field(default_factory=list)
+    suffixes: list[str] = field(default_factory=list)

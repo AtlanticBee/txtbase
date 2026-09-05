@@ -10,6 +10,7 @@ default_dir = "./temp/my-database"
 null_string = "NULL"
 
 # Ignored Files
+[ignored_paths]
 ignored_prefixes = [".","__"]
 ignored_infixes = []
 ignored_suffixes = []
@@ -22,6 +23,7 @@ default_dir = "./temp/my-database"
 null_bling = "NULL"
 
 # Ignored Files
+[ignored_paths]
 ignored_prefixes = [".","__"]
 ignored_infixes = []
 ignored_suffixes = []
@@ -33,6 +35,7 @@ server_port = 8080
 default_dir = "./temp/my-database"
 
 # Ignored Files
+[ignored_paths]
 ignored_prefixes = [".","__"]
 ignored_infixes = []
 ignored_suffixes = []
@@ -45,6 +48,7 @@ default_dir = "./temp/my-database"
 null_bling = "NULL"
 
 # Ignored Files
+[ignored_paths]
 ignored_prefixes = "."
 ignored_infixes = []
 ignored_suffixes = []
@@ -64,6 +68,7 @@ default_dir = "./temp/my-database"
 null_bling = "NULL"
 
 # Ignored Files
+[ignored_paths]
 ignored_prefixes = "."
 ignored_infixes = []
 ignored_suffixes = []
@@ -91,9 +96,9 @@ class TestConfigLoading(unittest.TestCase):
         self.assertEqual(config.server_port, 8080)
         self.assertEqual(config.default_dir, "./temp/my-database")
         self.assertEqual(config.null_string, "NULL")
-        self.assertEqual(config.ignored_prefixes, [".","__"])
-        self.assertEqual(config.ignored_infixes, [])
-        self.assertEqual(config.ignored_suffixes, [])
+        self.assertEqual(config.ignored_paths.prefixes, [".","__"])
+        self.assertEqual(config.ignored_paths.infixes, [])
+        self.assertEqual(config.ignored_paths.suffixes, [])
 
     # Confirm missing one row
     def test_config_missing_row_raises_type_error(self):
