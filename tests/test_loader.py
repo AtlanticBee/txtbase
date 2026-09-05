@@ -104,3 +104,35 @@ class TestTableLoader(unittest.TestCase):
             "colours":Table(),
             "colours-256":Table()
         })
+
+    def test_only_invalid_dirs_returns_empty_dict(self):
+        invalid_tables = [
+            "Cars-1",
+            "Houses-2",
+            "coloúrs",
+            "colours_256"
+        ]
+        ignored_tables = [
+            "pre-cars",
+            "houses-inf-casas",
+            "colurs-suff"
+        ]
+        invalid_files = [
+            "my-file-123",
+            "my-file-456"
+        ]
+        for i in invalid_tables:
+            new_dir = self.test_db / i
+            new_dir.mkdir()
+        for i in ignored_tables:
+            new_dir = self.test_db / i
+            new_dir.mkdir()
+        for i in invalid_files:
+            new_file = self.test_db / i
+            new_file.touch()
+        result = load_tables(self.test_db, ["pre"],["inf"],["suff"])
+        self.assertDictEqual(result, {})
+
+    def test_no_dirs_returns_empty_dict(self):
+        result = load_tables(self.test_db, ["pre"],["inf"],["suff"])
+        self.assertDictEqual(result, {})

@@ -24,6 +24,7 @@ def run_txtbase():
         sys.exit(err.exit_code)
     except (Exception) as err:
         print(f"Unexpected error encountered. Aborting... {err}")
+        sys.exit(1)
 
     # With the validated directory...
     # Get set of tables that meet requirements (one level deep)
