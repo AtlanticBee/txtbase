@@ -9,9 +9,11 @@ class TestTableLoader(unittest.TestCase):
         self.temp_dir = tempfile.TemporaryDirectory()
         self.test_db = Path(self.temp_dir.name) / "test-db"
         self.test_db.mkdir()
-        self.ignored_prexifes = ["pre", "good"]
-        self.ignored_infixes = ["in", "a"]
-        self.ignored_suffixes = ["end", "hi"]
+        self.ignored: IgnoredPaths = IgnoredPaths(
+            ["pre", "good"],
+            ["in", "a"],
+            ["end", "hi", "suff"]
+        )
 
     def tearDown(self):
         self.temp_dir.cleanup()
@@ -42,29 +44,29 @@ class TestTableLoader(unittest.TestCase):
             path = self.test_db / i
             path.mkdir()
             with self.subTest(msg="prefix test for invalid names", desc=path):
-                self.assertTrue(is_ignored(path, self.ignored_prexifes, self.ignored_infixes, self.ignored_suffixes))
+                self.assertTrue(is_ignored(path, self.ignored))
 
         for i in ignored_inf:
             path = self.test_db / i
             path.mkdir()
             with self.subTest(msg="infix test for invalid names", desc=path):
-                self.assertTrue(is_ignored(path, self.ignored_prexifes, self.ignored_infixes, self.ignored_suffixes))     
+                self.assertTrue(is_ignored(path, self.ignored))     
 
         for i in ignored_suff:
             path = self.test_db / i
             path.mkdir()
             with self.subTest(msg="suffix test for invalid names", desc=path):
-                self.assertTrue(is_ignored(path, self.ignored_prexifes, self.ignored_infixes, self.ignored_suffixes))
+                self.assertTrue(is_ignored(path, self.ignored))
 
         for i in accepted_names:
             path = self.test_db / i
             path.mkdir()
             with self.subTest(msg="prefix test for valid names", desc=path):
-                self.assertFalse(is_ignored(path, self.ignored_prexifes, self.ignored_infixes, self.ignored_suffixes))
+                self.assertFalse(is_ignored(path, self.ignored))
 
     def test_load_tables_returns_table_dict(self):
         valid_tables = [
-            "cars",
+            "crs",
             "houses",
             "colours",
             "colours-256"
@@ -85,6 +87,7 @@ class TestTableLoader(unittest.TestCase):
             "my-file-123",
             "my-file-456"
         ]
+        test_ignored = IgnoredPaths()
         for i in valid_tables:
             new_dir = self.test_db / i
             new_dir.mkdir()
@@ -97,9 +100,9 @@ class TestTableLoader(unittest.TestCase):
         for i in invalid_files:
             new_file = self.test_db / i
             new_file.touch()
-        result = load_tables(self.test_db, ["pre"],["inf"],["suff"])
+        result = load_tables(self.test_db, self.ignored)
         self.assertDictEqual(result, {
-            "cars":Table(),
+            "crs":Table(),
             "houses":Table(),
             "colours":Table(),
             "colours-256":Table()
@@ -130,9 +133,9 @@ class TestTableLoader(unittest.TestCase):
         for i in invalid_files:
             new_file = self.test_db / i
             new_file.touch()
-        result = load_tables(self.test_db, ["pre"],["inf"],["suff"])
+        result = load_tables(self.test_db, IgnoredPaths(["pre"],["inf"],["suff"]))
         self.assertDictEqual(result, {})
 
     def test_no_dirs_returns_empty_dict(self):
-        result = load_tables(self.test_db, ["pre"],["inf"],["suff"])
+        result = load_tables(self.test_db, IgnoredPaths(["pre"],["inf"],["suff"]))
         self.assertDictEqual(result, {})

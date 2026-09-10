@@ -1,5 +1,5 @@
 import tomllib
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from engine.data import IgnoredPaths
 from pathlib import Path
 
@@ -18,7 +18,7 @@ class Configuration:
         if isinstance(self.default_dir, str):
             self.default_dir = Path(self.default_dir)
 
-        if isinstance(self.ignored_paths, IgnoredPaths):
+        if isinstance(self.ignored_paths, dict):
             self.ignored_paths = IgnoredPaths(**self.ignored_paths)
 
 def load_config(filename:str, base_path:Path):

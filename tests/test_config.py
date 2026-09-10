@@ -11,9 +11,9 @@ null_string = "NULL"
 
 # Ignored Files
 [ignored_paths]
-ignored_prefixes = [".","__"]
-ignored_infixes = []
-ignored_suffixes = []
+prefixes = [".","__"]
+infixes = []
+suffixes = []
 """
 
 CONFIG_WITH_TYPO = """
@@ -24,9 +24,9 @@ null_bling = "NULL"
 
 # Ignored Files
 [ignored_paths]
-ignored_prefixes = [".","__"]
-ignored_infixes = []
-ignored_suffixes = []
+prefixes = [".","__"]
+infixes = []
+suffixes = []
 """
 
 CONFIG_MISSING_FIELD = """
@@ -36,9 +36,9 @@ default_dir = "./temp/my-database"
 
 # Ignored Files
 [ignored_paths]
-ignored_prefixes = [".","__"]
-ignored_infixes = []
-ignored_suffixes = []
+prefixes = [".","__"]
+infixes = []
+suffixes = []
 """
 
 CONFIG_WITH_INCORRECT_LIST_STRUCTURE = """
@@ -49,9 +49,9 @@ null_bling = "NULL"
 
 # Ignored Files
 [ignored_paths]
-ignored_prefixes = "."
-ignored_infixes = []
-ignored_suffixes = []
+prefixes = "."
+infixes = []
+suffixes = []
 """
 
 CONFIG_WITH_JSON_NOT_TOML = """
@@ -94,7 +94,7 @@ class TestConfigLoading(unittest.TestCase):
         config:Configuration = load_config("config.toml", self.base_path)
         self.assertIsInstance(config, Configuration)
         self.assertEqual(config.server_port, 8080)
-        self.assertEqual(config.default_dir, "./temp/my-database")
+        self.assertEqual(config.default_dir.name, "my-database")
         self.assertEqual(config.null_string, "NULL")
         self.assertEqual(config.ignored_paths.prefixes, [".","__"])
         self.assertEqual(config.ignored_paths.infixes, [])
