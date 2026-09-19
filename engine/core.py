@@ -6,7 +6,7 @@ from engine.workspace import prepare_workspace
 from engine.data import Database
 from engine.loader import load_tables
 
-CURRENT_DIR = Path(__file__).resolve()
+CURRENT_DIR = Path(__file__).resolve().parent
 
 def run_txtbase():
     # Note: this try-catch block only handles unrecoverable/unexpected errors
